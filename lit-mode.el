@@ -1,4 +1,4 @@
-;;; lit-mode.el --- Major mode for lit  -*- lexical-binding: t; -*-
+;;; lit-mode.el --- Major mode for lit
 
 ;; Copyright (C) 2014 Hector A Escobedo
 
@@ -34,18 +34,8 @@
   :group 'languages
   :prefix "lit-")
 
-;; Obligatory mode hook
-(defcustom lit-mode-hook nil
-  "Hook run after lit-mode loads."
-  :type 'hook
-  :group 'haskell
-  :link '(function-link lit-mode))
-
-;; No keymapping besides defaults yet
-(defvar lit-mode-map (make-sparse-keymap))
-
 ;; lit grammar regexes
-;; Actually a very simple grammer
+;; Actually a very simple grammar
 
 (defconst lit-macro-delimiters-rx
   (rx (or "<<" ">>" ">>=")))
@@ -80,9 +70,7 @@ Set to nil to disable so you can use a custom width.")
   "Major mode for editing lit literate source files."
   (setq font-lock-defaults lit-font-lock-defaults)
   (when lit-mode-tab-width
-    (setq tab-width lit-mode-tab-width))
-  (when lit-mode-hook
-    (lit-mode-hook)))
+    (setq tab-width lit-mode-tab-width)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.lit$" . lit-mode))
