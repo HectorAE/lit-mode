@@ -29,10 +29,17 @@
 
 ;;; Code:
 
+(defgroup lit nil
+  "Major mode for editing lit literate source files"
+  :group 'languages
+  :prefix "lit-")
+
 ;; Obligatory mode hook
 (defcustom lit-mode-hook nil
   "Hook run after lit-mode loads."
-  :type 'hook)
+  :type 'hook
+  :group 'haskell
+  :link '(function-link lit-mode))
 
 ;; No keymapping besides defaults yet
 (defvar lit-mode-map (make-sparse-keymap))
@@ -70,7 +77,7 @@ Set to nil to disable so you can use a custom width.")
 
 ;; Derives from text-mode to prevent string highlighting
 (define-derived-mode lit-mode text-mode "lit"
-  "lit mode is a major mode for editing lit macro files."
+  "Major mode for editing lit literate source files."
   (setq font-lock-defaults lit-font-lock-defaults)
   (when lit-mode-tab-width
     (setq tab-width lit-mode-tab-width))
