@@ -4,7 +4,7 @@
 
 ;; Author: Hector A Escobedo <ninjahector.escobedo@gmail.com>
 ;; Keywords: languages, tools
-;; Version: 0.1.0
+;; Version: 0.1.1
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 ;;; Commentary:
 
 ;; This is a major mode to support using lit:
-;; <https://github.com/cdosborn/lit>. Could be very useful combined with
-;; polymode. Markdown support is planned. I also plan to add console
-;; integration support, so for example C-c would run 'lit -c <file>' and
-;; something else 'lit -m <file>'.
+;; <https://github.com/cdosborn/lit>. Could be very useful combined
+;; with polymode. Markdown support is planned. I also plan to add
+;; console integration support, so for example C-c C-c would run 'lit
+;; -c <file>' and something else 'lit -m <file>'.
 
 ;;; Code:
 
@@ -38,6 +38,7 @@
 (defvar lit-mode-map (make-sparse-keymap))
 
 ;; lit grammar regexes
+;; Actually a very simple grammer
 
 (defconst lit-macro-delimiters-rx
   (rx (or "<<" ">>" ">>=")))
@@ -51,7 +52,7 @@
 ;; The narrative is anything that isn't indented at all.
 ;; In other words, not part of a macro or macro reference.
 (defconst lit-narrative-rx
-  (rx bol (not (syntax whitespace)) (1+ not-newline)))
+  (rx bol (not (syntax whitespace)) (0+ not-newline)))
 
 ;; Font-lock data for syntax highlighting
 (defconst lit-font-lock-defaults
@@ -67,7 +68,8 @@
   "Standard tab width for lit.
 Set to nil to disable so you can use a custom width.")
 
-(define-derived-mode lit-mode fundamental-mode "lit"
+;; Derives from text-mode to prevent string highlighting
+(define-derived-mode lit-mode text-mode "lit"
   "lit mode is a major mode for editing lit macro files."
   (setq font-lock-defaults lit-font-lock-defaults)
   (when lit-mode-tab-width
